@@ -8,12 +8,30 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
+
+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
 """
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+#SMTP SETTING
+# settings.py
+
+#this is smtp setting :)
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp-relay.brevo.com'
+# EMAIL_PORT = 587  
+# EMAIL_USE_TLS = True 
+# EMAIL_HOST_USER = 'ROah3YftcS7DnpQI' 
+# EMAIL_HOST_PASSWORD = 'ROah3YftcS7DnpQI'  
+# DEFAULT_FROM_EMAIL = 'v.yazdani79@gmail.com'
+
+
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -105,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'FA'
 
 TIME_ZONE = 'UTC'
 
