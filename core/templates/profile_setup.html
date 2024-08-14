@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تکمیل پروفایل</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            direction: rtl;
+            font-family: 'Tahoma', sans-serif;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h3>تکمیل پروفایل</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">نام</label>
+                <input type="text" id="first_name" name="first_name" value="{{ form.first_name.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">نام خانوادگی</label>
+                <input type="text" id="last_name" name="last_name" value="{{ form.last_name.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="image">عکس پروفایل</label>
+                <input type="file" id="image" name="image">
+            </div>
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+</body>
+</html>
