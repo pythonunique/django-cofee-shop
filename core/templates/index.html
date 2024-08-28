@@ -6,149 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحه ثبت‌نام/ورود</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <style>
-        /* تغییر رنگ hover فقط برای دکمه خروج */
-        #logout-btn:hover {
-            background-color: red; /* رنگ پس‌زمینه قرمز هنگام hover */
-            color: white; /* تغییر رنگ متن به سفید (در صورت نیاز) */
-        }
-    </style>
 </head>
 <body>
 
-<!-- Cart Modal -->
-<div id="cart-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>سبد خرید</h2>
-        <div id="cart-container">
-            <!-- Cart items will be dynamically added here -->
-        </div>
+<div class="header">
+    <div class="auth-links">
+        {% if user.is_authenticated %}
+        <a class="auth-button" id="logout-btn" href="{% url 'logout' %}">خروج</a>
+        <a class="auth-button" href="{% url 'profile' %}">پروفایل</a>
+        <a class="auth-button" id="profile-logo" href="#">
+            <img src="{% static 'cart.png' %}" alt="Logo">
+        </a>
+        {% else %}
+        <a class="auth-button" href="{% url 'signup_email' %}">ثبت‌نام</a>
+        <a class="auth-button" href="{% url 'login_user' %}">ورود</a>
+        <a class="auth-button" id="profile-logo" href="#">
+            <img src="{% static 'cart.png' %}" alt="Logo">
+        </a>
+        {% endif %}
     </div>
+    <div class="title">کافه رستوران عربی</div>
 </div>
 
-    <div class="header">
-        <div class="auth-links">
-            {% if user.is_authenticated %}
-            <a class="auth-button" id="logout-btn" href="{% url 'logout' %}">خروج</a>
-            <a class="auth-button" href="{% url 'profile' %}">پروفایل</a>
-            <a class="auth-button" id="profile-logo" href="#">`
-                <img src="{% static 'cart.png' %}" alt="Logo">
-            </a>
-            {% else %}
-            <a class="auth-button" href="signup">ثبت‌نام</a>
-            <a class="auth-button" href="login">ورود</a>
-            <a class="auth-button" id="profile-logo" href="#">
-                <img src="{% static 'cart.png' %}" alt="Logo">
-            </a>
-            {% endif %}
-        </div>
-        <div class="title">کافه رستوران عربی</div>
-    </div>
-    
-<!-- Cart Modal -->
-<div id="cart-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>سبد خرید</h2>
-        <div id="cart-container">
-            <!-- Cart items will be dynamically added here -->
-        </div>
-    </div>
-</div>
+<!-- منوی ناوبری -->
+<nav class="sticky-nav">
+    <ul>
+        <li><a href="#cold_drink"><img class="logo" src="{% static 'drink.webp' %}">نوشیدنی سرد</a></li>
+        <li><a href="#hot_drink"><img class="logo" src="{% static 'tea.png' %}">نوشیدنی گرم</a></li>
+        <li><a href="#food"><img class="logo" src="{% static 'spaghetti.webp' %}">غذا</a></li>
+        <li><a href="#hookah"><img class="logo" src="{% static 'hubble.png' %}">قلیون</a></li>
+    </ul>
+</nav>
 
-
-    <!-- منوی ناوبری -->
-    <nav class="sticky-nav">
-        <ul>
-            <li><a href="#cold_drink"><img class="logo" src="{% static 'drink.webp'%}">نوشیدنی سرد</a></li>
-            <li><a href="#hot_drink"><img class="logo" src="{% static 'tea.png'%}">نوشیدنی گرم</a></li>
-            <li><a href="#food"><img class="logo" src="{% static 'spaghetti.webp'%}">غذا</a></li>
-            <li><a href="#hookah"><img class="logo" src="{% static 'hubble.png'%}">قلیون</a></li>
-        </ul>
-    </nav>
-
-    <!-- بخش نوشیدنی سرد -->
-    <section id="cold_drink">
-        <h2>نوشیدنی سرد</h2>
-        <div class="items">
-            {% for drink in cold_drinks %}
-            <div class="card-container">
-                <div class="product-card" data-modal-id="coldModal{{ forloop.counter }}" data-product-id="{{ drink.id }}" data-product-type="drink_cold">
-                    <div class="card-header">{{ drink.name }}</div>
-                    <div class="card-image-container">
-                        <img src="{{ drink.image.url }}" alt="Product Image">
-                    </div>
-                    <div class="card-footer">
-                        <span class="price">{{ drink.price }}t</span>
-                        <div class="quantity-buttons">
-                            <button class="decrease-quantity">-</button>
-                            <span class="quantity" id="quantity-{{ drink.id }}">0</span>
-                            <button class="increase-quantity">+</button>
-                        </div>
-                    </div>
+<!-- بخش نوشیدنی سرد -->
+<section id="cold_drink">
+    <h2>نوشیدنی سرد</h2>
+    <div class="items">
+        {% for drink in cold_drinks %}
+        <div class="product-card" data-product-id="{{ drink.id }}" data-product-type="cold_drink">
+            <div class="card-header">{{ drink.name }}</div>
+            <div class="card-image-container">
+                <img src="{{ drink.image.url }}" alt="Product Image">
+            </div>
+            <p class="description">{{ drink.description }}</p>
+            <div class="card-footer">
+                <span class="price">{{ drink.price }}t</span>
+                <div class="quantity-buttons">
+                    <button class="decrease-quantity">-</button>
+                    <span class="quantity" id="quantity-{{ drink.id }}">0</span>
+                    <button class="increase-quantity">+</button>
                 </div>
             </div>
-            <div id="coldModal{{ forloop.counter }}" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>{{ drink.name }}</h2>
-                    <div class="header-line"></div>
-                    <img src="{{ drink.image.url }}" alt="Product Image" style="width:100%">
-                    <div class="image-line"></div>
-                    <p class="description">{{ drink.description }}</p>
-                    <div class="footer">
-                        <div class="price">{{ drink.price }}t</div>
-                        <div class="quantity-buttons">
-                            <button class="decrease-quantity" data-product-id="{{ drink.id }}" data-product-type="drink_cold">-</button>
-                            <span class="quantity" id="modal-quantity-{{ drink.id }}">0</span>
-                            <button class="increase-quantity" data-product-id="{{ drink.id }}" data-product-type="drink_cold">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            
         </div>
-    </section>
+        {% endfor %}
+    </div>
+</section>
 
-    <!-- بخش نوشیدنی گرم -->
 <!-- بخش نوشیدنی گرم -->
 <section id="hot_drink">
     <h2>نوشیدنی گرم</h2>
     <div class="items">
         {% for hot_drink in hot_drinks %}
-        <div class="card-container">
-            <div class="product-card" data-modal-id="hotModal{{ forloop.counter }}">
-                <div class="card-header">{{ hot_drink.name }}</div>
-                <div class="card-image-container">
-                    <img src="{{ hot_drink.image.url }}" alt="Product Image">
-                </div>
-                <div class="card-footer">
-                    <span class="price">{{ hot_drink.price }}t</span>
-                    <div class="quantity-buttons">
-                        <button class="decrease-quantity">-</button>
-                        <span class="quantity" id="quantity-{{ hot_drink.id }}">0</span>
-                        <button class="increase-quantity">+</button>
-                    </div>
-                </div>
+        <div class="product-card" data-product-id="{{ hot_drink.id }}" data-product-type="hot_drink">
+            <div class="card-header">{{ hot_drink.name }}</div>
+            <div class="card-image-container">
+                <img src="{{ hot_drink.image.url }}" alt="Product Image">
             </div>
-        </div>
-        <div id="hotModal{{ forloop.counter }}" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>{{ hot_drink.name }}</h2>
-                <div class="header-line"></div>
-                <img src="{{ hot_drink.image.url }}" alt="Product Image" style="width:100%">
-                <div class="image-line"></div>
-                <p class="description">{{ hot_drink.description }}</p>
-                <div class="footer">
-                    <div class="price">{{ hot_drink.price }}t</div>
-                    <div class="quantity-buttons">
-                        <button class="decrease-quantity">-</button>
-                        <span class="quantity" id="modal-quantity-{{ hot_drink.id }}">0</span>
-                        <button class="increase-quantity">+</button>
-                    </div>
+            <p class="description">{{ hot_drink.description }}</p>
+            <div class="card-footer">
+                <span class="price">{{ hot_drink.price }}t</span>
+                <div class="quantity-buttons">
+                    <button class="decrease-quantity">-</button>
+                    <span class="quantity" id="quantity-{{ hot_drink.id }}">0</span>
+                    <button class="increase-quantity">+</button>
                 </div>
             </div>
         </div>
@@ -161,37 +91,18 @@
     <h2>غذا</h2>
     <div class="items">
         {% for food in foods %}
-        <div class="card-container">
-            <div class="product-card" data-modal-id="foodModal{{ forloop.counter }}">
-                <div class="card-header">{{ food.name }}</div>
-                <div class="card-image-container">
-                    <img src="{{ food.image.url }}" alt="Product Image">
-                </div>
-                <div class="card-footer">
-                    <span class="price">{{ food.price }}t</span>
-                    <div class="quantity-buttons">
-                        <button class="decrease-quantity">-</button>
-                        <span class="quantity" id="quantity-{{ food.id }}">0</span>
-                        <button class="increase-quantity">+</button>
-                    </div>
-                </div>
+        <div class="product-card" data-product-id="{{ food.id }}" data-product-type="food">
+            <div class="card-header">{{ food.name }}</div>
+            <div class="card-image-container">
+                <img src="{{ food.image.url }}" alt="Product Image">
             </div>
-        </div>
-        <div id="foodModal{{ forloop.counter }}" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>{{ food.name }}</h2>
-                <div class="header-line"></div>
-                <img src="{{ food.image.url }}" alt="Product Image" style="width:100%">
-                <div class="image-line"></div>
-                <p class="description">{{ food.description }}</p>
-                <div class="footer">
-                    <div class="price">{{ food.price }}t</div>
-                    <div class="quantity-buttons">
-                        <button class="decrease-quantity">-</button>
-                        <span class="quantity" id="modal-quantity-{{ food.id }}">0</span>
-                        <button class="increase-quantity">+</button>
-                    </div>
+            <p class="description">{{ food.description }}</p>
+            <div class="card-footer">
+                <span class="price">{{ food.price }}t</span>
+                <div class="quantity-buttons">
+                    <button class="decrease-quantity">-</button>
+                    <span class="quantity" id="quantity-{{ food.id }}">0</span>
+                    <button class="increase-quantity">+</button>
                 </div>
             </div>
         </div>
@@ -204,37 +115,18 @@
     <h2>قلیون</h2>
     <div class="items">
         {% for hookah in hookahs %}
-        <div class="card-container">
-            <div class="product-card" data-modal-id="hookahModal{{ forloop.counter }}">
-                <div class="card-header">{{ hookah.name }}</div>
-                <div class="card-image-container">
-                    <img src="{{ hookah.image.url }}" alt="Product Image">
-                </div>
-                <div class="card-footer">
-                    <span class="price">{{ hookah.price }}t</span>
-                    <div class="quantity-buttons">
-                        <button class="decrease-quantity">-</button>
-                        <span class="quantity" id="quantity-{{ hookah.id }}">0</span>
-                        <button class="increase-quantity">+</button>
-                    </div>
-                </div>
+        <div class="product-card" data-product-id="{{ hookah.id }}" data-product-type="hookah">
+            <div class="card-header">{{ hookah.name }}</div>
+            <div class="card-image-container">
+                <img src="{{ hookah.image.url }}" alt="Product Image">
             </div>
-        </div>
-        <div id="hookahModal{{ forloop.counter }}" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>{{ hookah.name }}</h2>
-                <div class="header-line"></div>
-                <img src="{{ hookah.image.url }}" alt="Product Image" style="width:100%">
-                <div class="image-line"></div>
-                <p class="description">{{ hookah.description }}</p>
-                <div class="footer">
-                    <div class="price">{{ hookah.price }}t</div>
-                    <div class="quantity-buttons">
-                        <button class="decrease-quantity">-</button>
-                        <span class="quantity" id="modal-quantity-{{ hookah.id }}">0</span>
-                        <button class="increase-quantity">+</button>
-                    </div>
+            <p class="description">{{ hookah.description }}</p>
+            <div class="card-footer">
+                <span class="price">{{ hookah.price }}t</span>
+                <div class="quantity-buttons">
+                    <button class="decrease-quantity">-</button>
+                    <span class="quantity" id="quantity-{{ hookah.id }}">0</span>
+                    <button class="increase-quantity">+</button>
                 </div>
             </div>
         </div>
@@ -242,18 +134,32 @@
     </div>
 </section>
 
+<!-- Cart Modal -->
+<div id="cart-modal">
+    <span id="close-cart">×</span>
+    <div id="cart-container">
+        <!-- Items will be dynamically added here -->
+    </div>
+    <div id="checkout-container">
+        <button id="checkout-btn">تأیید سفارش</button>
+    </div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     var cartModal = document.getElementById('cart-modal');
     var profileLogo = document.getElementById('profile-logo');
-    var closeBtn = document.querySelector('.modal .close');
+    var closeBtn = document.getElementById('close-cart');
+    var checkoutBtn = document.getElementById('checkout-btn');
     var cartContainer = document.getElementById('cart-container');
 
     function updateCart() {
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         cartContainer.innerHTML = '';
+        let total = 0;
 
         cartItems.forEach(item => {
+            total += item.price * item.quantity;
             const cartItemDiv = document.createElement('div');
             cartItemDiv.className = 'cart-item';
             cartItemDiv.innerHTML = `
@@ -262,6 +168,15 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             cartContainer.appendChild(cartItemDiv);
         });
+
+        // نمایش قیمت کل
+        const totalDiv = document.createElement('div');
+        totalDiv.className = 'cart-item';
+        totalDiv.innerHTML = `
+            <span>مجموع:</span>
+            <span>${total.toFixed(3)}t</span>
+        `;
+        cartContainer.appendChild(totalDiv);
     }
 
     profileLogo.onclick = function () {
@@ -279,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    
     document.querySelectorAll('.increase-quantity').forEach(button => {
         button.addEventListener('click', function (event) {
             event.stopPropagation();
@@ -346,8 +262,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 </script>
 
 </body>
 </html>
+
+
+

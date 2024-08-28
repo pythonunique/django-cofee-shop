@@ -35,11 +35,11 @@ class Hookah(Product):
         verbose_name = "قلیون"
         verbose_name_plural = "قلیون‌ها"
 
-class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+# class Cart(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'Cart for {self.user.email}'
+#     def __str__(self):
+#         return f'Cart for {self.user.email}'
 
 # class CartItem(models.Model):
 #     CART_ITEM_TYPES = [

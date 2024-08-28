@@ -138,7 +138,7 @@ section:nth-of-type(even) {
 
 .items{
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(4,1fr);
     direction: rtl;
     
 }
@@ -211,124 +211,119 @@ section:nth-of-type(even) {
 /* سبک‌های کلی مدال */
 /* سبک‌های کلی مدال */
 /* سبک‌های کلی مدال */
-.modal {
-    display: none; /* به طور پیش‌فرض مدال نمایش داده نمی‌شود */
-    position: fixed; /* موقعیت ثابت برای پوشش تمام صفحه */
-    z-index: 9999; /* نمایش در بالاترین لایه */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* در صورت نیاز اسکرول ایجاد می‌کند */
-    background-color: rgba(0,0,0,0.4); /* رنگ پس‌زمینه نیمه‌شفاف */
+
+
+#logout-btn:hover {
+    background-color: red; /* رنگ پس‌زمینه قرمز هنگام hover */
+    color: white; /* تغییر رنگ متن به سفید (در صورت نیاز) */
 }
 
-/* محتوای مدال */
-.modal-content {
-    background-color: #fefefe;
-    margin: 10% auto; /* موقعیت مرکزی با حاشیه بالاتر */
-    padding: 15px; /* فضای داخلی مدال */
-    border: 1px solid #888;
-    width: 60%; /* عرض مدال */
-    max-width: 400px; /* حداکثر عرض مدال */
-    height: 500px; /* ارتفاع ثابت برای مدال */
-    position: relative; /* برای موقعیت‌گذاری محتوای داخلی */
-    overflow: hidden; /* جلوگیری از اسکرول داخلی */
-    box-sizing: border-box; /* شامل padding و border در اندازه کل */
+/* استایل برای مدال سبد خرید */
+/* استایل کلی مدال سبد خرید */
+#cart-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    display: none; /* ابتدا مدال مخفی است */
+    width: 400px; /* افزایش عرض مدال */
+    max-height: 80vh; /* تنظیم حداکثر ارتفاع مدال */
+    overflow-y: auto; /* فعال کردن اسکرول عمودی */
+    border-radius: 8px; /* گرد کردن گوشه‌ها */
 }
 
-/* دکمه بستن مدال */
-.close {
-    color: #aaa;
-    float: right; /* قرارگیری در سمت راست */
-    font-size: 24px; /* اندازه فونت دکمه بستن */
-    font-weight: bold;
+/* استایل برای دکمه بستن مدال */
+#close-cart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s; /* انیمیشن ملایم برای تغییر رنگ */
+    font-size: 20px;
+    color: #000;
+    transition: color 0.3s;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    background-color: yellow; /* رنگ پس‌زمینه هنگام hover */
-    border-radius: 50%; /* گرد کردن دکمه */
-    padding: 5px; /* افزایش فضای داخلی دکمه */
+#close-cart:hover {
+    color: #ffbb00; /* تغییر رنگ دکمه بستن هنگام hover */
 }
 
-/* سبک‌های عنوان مدال */
-.modal-content h2 {
-    font-size: 18px; /* اندازه فونت عنوان */
+
+
+/* استایل برای آیتم‌های سبد خرید */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ffdd57; /* رنگ زرد برای تفکیک آیتم‌ها */
+    font-size: 16px;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-size: 18px;
     font-weight: bold;
-    margin: 10px 0; /* فاصله با خط زرد زیر عنوان */
-    text-align: center; /* مرکز چینش عنوان */
+    margin-bottom: 8px;
 }
 
-/* خط زرد زیر عنوان */
-.modal-content .header-line {
-    border-top: 3px solid yellow; /* خط زرد */
-    margin: 10px 0; /* فاصله با عناصر زیر خط */
-}
-
-/* تصویر غذا */
-.modal-content img {
+.card-image-container img {
     width: 100%;
-    height: 300px; /* ارتفاع ثابت برای تصویر */
-    object-fit: cover; /* برش تصویر به اندازه مناسب */
-    display: block;
-    margin: 10px 0;
+    height: auto;
+    border-radius: 8px;
 }
 
-/* خط زرد زیر تصویر */
-.modal-content .image-line {
-    border-top: 4px solid yellow;
-    margin: 10px 0;
-}
-
-/* توضیحات غذا */
-.modal-content .description {
-    margin: 10px 0;
-    height: 80px; /* ارتفاع ثابت برای توضیحات */
-    overflow: hidden; /* جلوگیری از overflow محتوا */
-}
-
-/* خط زرد زیر توضیحات */
-.modal-content .description-line {
-    border-top: 4px solid yellow;
-    margin: 10px 0;
-}
-
-/* قیمت و دکمه‌های کم و زیاد */
-.modal-content .footer {
+.card-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    bottom: 15px;
-    width: calc(100% - 30px); /* عرض ثابت برای فضای داخلی */
+    margin-top: 8px;
 }
 
-.modal-content .price {
-    font-size: 16px; /* اندازه فونت قیمت */
+.price {
+    font-size: 16px;
     font-weight: bold;
 }
 
-.modal-content .quantity-buttons {
+.quantity-buttons {
     display: flex;
     align-items: center;
 }
 
-.modal-content .quantity-buttons button {
-    font-size: 16px; /* اندازه فونت دکمه‌ها */
-    padding: 8px; /* اندازه دکمه‌ها */
-    margin: 0 5px;
-    border: 1px solid #888;
-    background-color: #f0f0f0;
+.quantity-buttons button {
+    padding: 4px 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s; /* انیمیشن ملایم برای تغییر رنگ */
+    border-radius: 4px;
+    margin: 0 4px;
 }
 
-.modal-content .quantity-buttons button:hover {
-    background-color: yellow; /* رنگ پس‌زمینه هنگام hover */
-    border-color: #ddd; /* تغییر رنگ حاشیه هنگام hover */
-    color: black; /* رنگ متن هنگام hover */
+.quantity {
+    font-size: 16px;
+    padding: 0 8px;
+}
+
+/* استایل توضیحات */
+.description {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
 }
