@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import PasswordChangeForm
 
 class EmailForm(forms.Form):
     email = forms.EmailField(label='ایمیل', widget=forms.EmailInput(attrs={'placeholder': 'ایمیل خود را وارد کنید'}))
@@ -35,3 +36,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'image']
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    # تنظیمات اضافی فرم تغییر رمز عبور می‌تواند اینجا اضافه شود
+    pass

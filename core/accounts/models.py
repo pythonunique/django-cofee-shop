@@ -52,7 +52,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=250)
     last_name = models.CharField(max_length=250)
-    image = models.ImageField(blank=True,null=True)
+    image = models.ImageField(blank=True,null=True,upload_to='users_pic/')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

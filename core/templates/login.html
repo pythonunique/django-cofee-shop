@@ -1,11 +1,9 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وارد کردن کد</title>
+    <title>ورود</title>
     <style>
         body {
             background-color: #ffffff; /* پس‌زمینه سفید */
@@ -15,7 +13,7 @@
             margin: 0;
             padding: 0;
         }
-        .form-container {
+        .login-container {
             max-width: 400px;
             margin: 100px auto;
             background-color: #ffffff; /* رنگ زمینه فرم سفید */
@@ -24,7 +22,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 2px solid #fbc02d; /* رنگ حاشیه زرد */
         }
-        h3 {
+        h2 {
             text-align: center;
             color: #fbc02d; /* رنگ زرد برای عنوان */
         }
@@ -36,7 +34,7 @@
             margin-bottom: 5px;
             color: #333; /* رنگ متن مشکی */
         }
-        input[type="text"] {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             font-size: 14px;
@@ -46,12 +44,8 @@
             background-color: #ffffff; /* زمینه سفید */
             color: #333; /* رنگ متن مشکی */
         }
-        input[type="text"]::placeholder {
+        input::placeholder {
             color: #666; /* رنگ placeholder مشکی تیره‌تر */
-        }
-        .text-danger {
-            color: red;
-            margin-top: 5px;
         }
         button {
             width: 100%;
@@ -70,23 +64,15 @@
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h3>وارد کردن کد</h3>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="code">کد تایید</label>
-                {{ form.code }}
-                {% if form.code.errors %}
-                <div class="text-danger">
-                    {% for error in form.code.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-            <button type="submit">تایید</button>
-        </form>
-    </div>
+
+<div class="login-container">
+    <h2>ورود به حساب کاربری</h2>
+    <form method="post" action="{% url 'login_user' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ورود</button>
+    </form>
+</div>
+
 </body>
 </html>

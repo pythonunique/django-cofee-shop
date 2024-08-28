@@ -1,12 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Vazir', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
 .header {
-    background-color: #e0e0e0;
+    background-color: #fff;
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -24,25 +24,311 @@ body {
 
 .header .auth-links a {
     text-decoration: none;
-    color: #6baa41;
+    color: #000000;
     margin-left: 20px;
     padding: 10px 20px;
-    border: 2px solid #333;
     border-radius: 25px;
-    transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+    transition: color 0.3s, background-color 0.3s;
 }
 
 .header .auth-links a:hover {
-    color: #fff;
-    background-color: #35743a;
-    border-color: hsl(93, 83%, 61%);
+    color: #000000;
+    background-color: #faeb16;
 }
 
-.auth-button{
+.auth-button {
     text-decoration: none;
     text-align: center;
     font-weight: bold;
+}
 
+.auth-button img {
+    width: 40px; /* تنظیم عرض لوگو */
+    height: 40px; /* تنظیم ارتفاع لوگو */
+    vertical-align: middle; /* تراز کردن لوگو با متن */
+    border-radius: 50%; /* برای گرد کردن لوگو */
+}
+
+#profile-logo {
+    padding: 13px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+#profile-logo:hover {
+    background-color: #faeb16; /* تغییر رنگ پس‌زمینه هنگام hover */
+    transform: scale(1.1);
 }
 
 
+/* منوی چسبنده */
+.sticky-nav {
+    background-color: #eecc09;
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sticky-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+}
+
+.sticky-nav ul li {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sticky-nav ul li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+}
+
+.sticky-nav ul li a img {
+    margin-bottom: 5px;
+}
+
+.sticky-nav ul li a:hover {
+    background-color: #ffbb00;
+    color: #000000;
+}
+
+/* تنظیم فاصله محتوا از منو */
+section {
+    padding: 60px 20px;
+    margin-top: 0;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    text-align: right;
+}
+
+section:nth-of-type(even) {
+    background-color: #e2e2e2;
+}
+
+/* کارت محصولات */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 6px;
+    /* justify-content: flex-start; چیدن کارت‌ها از سمت چپ */
+    direction: rtl; /* چیدن کارت‌ها از راست به چپ */
+}
+
+.items{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    direction: rtl;
+    
+}
+.product-card {
+    width: 250px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #ffdd57;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.card-image-container {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card-footer {
+    padding: 10px;
+    background-color: #ffdd57;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.quantity-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.quantity-buttons button {
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+
+/* سبک‌های کلی مدال */
+/* سبک‌های کلی مدال */
+/* سبک‌های کلی مدال */
+/* سبک‌های کلی مدال */
+/* سبک‌های کلی مدال */
+/* سبک‌های کلی مدال */
+.modal {
+    display: none; /* به طور پیش‌فرض مدال نمایش داده نمی‌شود */
+    position: fixed; /* موقعیت ثابت برای پوشش تمام صفحه */
+    z-index: 9999; /* نمایش در بالاترین لایه */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* در صورت نیاز اسکرول ایجاد می‌کند */
+    background-color: rgba(0,0,0,0.4); /* رنگ پس‌زمینه نیمه‌شفاف */
+}
+
+/* محتوای مدال */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* موقعیت مرکزی با حاشیه بالاتر */
+    padding: 15px; /* فضای داخلی مدال */
+    border: 1px solid #888;
+    width: 60%; /* عرض مدال */
+    max-width: 400px; /* حداکثر عرض مدال */
+    height: 500px; /* ارتفاع ثابت برای مدال */
+    position: relative; /* برای موقعیت‌گذاری محتوای داخلی */
+    overflow: hidden; /* جلوگیری از اسکرول داخلی */
+    box-sizing: border-box; /* شامل padding و border در اندازه کل */
+}
+
+/* دکمه بستن مدال */
+.close {
+    color: #aaa;
+    float: right; /* قرارگیری در سمت راست */
+    font-size: 24px; /* اندازه فونت دکمه بستن */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* انیمیشن ملایم برای تغییر رنگ */
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    background-color: yellow; /* رنگ پس‌زمینه هنگام hover */
+    border-radius: 50%; /* گرد کردن دکمه */
+    padding: 5px; /* افزایش فضای داخلی دکمه */
+}
+
+/* سبک‌های عنوان مدال */
+.modal-content h2 {
+    font-size: 18px; /* اندازه فونت عنوان */
+    font-weight: bold;
+    margin: 10px 0; /* فاصله با خط زرد زیر عنوان */
+    text-align: center; /* مرکز چینش عنوان */
+}
+
+/* خط زرد زیر عنوان */
+.modal-content .header-line {
+    border-top: 3px solid yellow; /* خط زرد */
+    margin: 10px 0; /* فاصله با عناصر زیر خط */
+}
+
+/* تصویر غذا */
+.modal-content img {
+    width: 100%;
+    height: 300px; /* ارتفاع ثابت برای تصویر */
+    object-fit: cover; /* برش تصویر به اندازه مناسب */
+    display: block;
+    margin: 10px 0;
+}
+
+/* خط زرد زیر تصویر */
+.modal-content .image-line {
+    border-top: 4px solid yellow;
+    margin: 10px 0;
+}
+
+/* توضیحات غذا */
+.modal-content .description {
+    margin: 10px 0;
+    height: 80px; /* ارتفاع ثابت برای توضیحات */
+    overflow: hidden; /* جلوگیری از overflow محتوا */
+}
+
+/* خط زرد زیر توضیحات */
+.modal-content .description-line {
+    border-top: 4px solid yellow;
+    margin: 10px 0;
+}
+
+/* قیمت و دکمه‌های کم و زیاد */
+.modal-content .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    width: calc(100% - 30px); /* عرض ثابت برای فضای داخلی */
+}
+
+.modal-content .price {
+    font-size: 16px; /* اندازه فونت قیمت */
+    font-weight: bold;
+}
+
+.modal-content .quantity-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.modal-content .quantity-buttons button {
+    font-size: 16px; /* اندازه فونت دکمه‌ها */
+    padding: 8px; /* اندازه دکمه‌ها */
+    margin: 0 5px;
+    border: 1px solid #888;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* انیمیشن ملایم برای تغییر رنگ */
+}
+
+.modal-content .quantity-buttons button:hover {
+    background-color: yellow; /* رنگ پس‌زمینه هنگام hover */
+    border-color: #ddd; /* تغییر رنگ حاشیه هنگام hover */
+    color: black; /* رنگ متن هنگام hover */
+}
