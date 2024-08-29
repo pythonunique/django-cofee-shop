@@ -7,7 +7,7 @@
     <title>پروفایل کاربر</title>
     <style>
         body {
-            background-color: #f5f5f5;
+            background-color: #f5f5f5; /* رنگ پس‌زمینه صفحه */
             direction: rtl;
             font-family: 'Tahoma', sans-serif;
         }
@@ -22,6 +22,7 @@
         h3 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -29,7 +30,7 @@
         label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
+            color: #333; /* رنگ متن برچسب‌ها */
         }
         input[type="text"],
         input[type="file"],
@@ -48,15 +49,21 @@
         button {
             width: 100%;
             padding: 10px;
-            background-color: #6c757d;
-            color: white;
+            background-color: #f7c31a; /* رنگ زمینه دکمه */
+            color: #fff; /* رنگ متن دکمه */
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         button:hover {
-            background-color: #5a6268;
+            background-color: #f5b71a; /* رنگ دکمه هنگام hover */
+            transform: scale(1.05); /* بزرگتر شدن دکمه هنگام hover */
+        }
+        button:active {
+            background-color: #f2a80a; /* رنگ دکمه هنگام کلیک */
+            transform: scale(0.95); /* کوچک‌تر شدن دکمه هنگام کلیک */
         }
     </style>
 </head>

@@ -9,6 +9,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 def first_page(request):
@@ -124,7 +127,7 @@ def login_view(request):
 
 
 @login_required
-def profile_view(request):
+def profile_edit(request):
     user = request.user
     profile = Profile.objects.filter(user=user).first()
 
@@ -134,11 +137,12 @@ def profile_view(request):
 
         if profile_form.is_valid():
             profile_form.save()
+            return redirect('profile_view')
 
         if password_form.is_valid():
             user = password_form.save()
             update_session_auth_hash(request, user)  # به‌روزرسانی session کاربر
-            return redirect('profile')  # بازگشت به صفحه پروفایل
+            return redirect('profile_view')  # بازگشت به صفحه پروفایل
 
     else:
         profile_form = ProfileForm(instance=profile)
@@ -150,20 +154,39 @@ def profile_view(request):
     })
 
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+@login_required
+def profile_view(request):
+    user = request.user
+    profile = Profile.objects.filter(user=user).first()
+
+
+    return render(request, 'showprofile.html', {'profile': profile})
 
 
 @csrf_exempt
 def submit_cart(request):
     if request.method == 'POST':
-        cart = json.loads(request.body).get('cartItems', [])
-        # پردازش محصولات در سبد خرید
-        # مثلاً ذخیره در دیتابیس یا ایجاد سفارش
-
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'failed'}, status=400)
+        # بررسی وضعیت لاگین کاربر
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'redirect', 'url': '/login/'})
+        
+        try:
+            cart_items = json.loads(request.body).get('cartItems', [])
+            if cart_items:
+                # ایجاد سفارش جدید
+                order = Order_food.objects.create(
+                    user=request.user,
+                    cart_items=json.dumps(cart_items),  # ذخیره به عنوان TextField
+                    total_amount=sum(item['price'] * item['quantity'] for item in cart_items),
+                    status='pending'  # وضعیت اولیه سفارش
+                )
+                return JsonResponse({'status': 'success'})
+            else:
+                return JsonResponse({'status': 'failed', 'message': 'Cart is empty'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'failed', 'message': 'Invalid JSON'}, status=400)
+    
+    return JsonResponse({'status': 'failed', 'message': 'Invalid request method'}, status=400)
 
 
 def check_login_status(request):

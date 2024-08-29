@@ -12,7 +12,8 @@ urlpatterns = [
      path('logout/', LogoutView.as_view(next_page='home_view'), name='logout'),
     # path('profile/setup/<int:user_id>/', profile_setup, name='profile_setup'),
     path('profile/set/', profile_setup, name='profile_set'),  # ویو پروفایل را باید ایجاد کنید
-    path('profile/', profile_view, name='profile'),
+    path('profile/', profile_view, name='profile_view'),
+    path('profile/edit/', profile_edit, name='profile_edit'),
     path('submit_cart/', submit_cart, name='submit_cart'),
     path('check_login_status/', check_login_status, name='check_login_status'),
 ]

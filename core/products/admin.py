@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Drink_cold, Food, Hookah,Drink_hot
+from .models import Drink_cold, Food, Hookah,Drink_hot, Order_food,OrderItem_food
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'price', 'image')  # ستونی که نمایش داده می‌شود
@@ -35,3 +35,12 @@ admin.site.register(Drink_hot, Drink_hotAdmin)
 admin.site.register(Drink_cold, Drink_coldAdmin)
 admin.site.register(Food, FoodAdmin)
 admin.site.register(Hookah, HookahAdmin)
+
+
+
+class OrderFoodAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'total_amount', 'status', 'created_at']
+    list_filter = ['status', 'created_at']
+    search_fields = ['user__username']
+
+admin.site.register(Order_food, OrderFoodAdmin)
