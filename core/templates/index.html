@@ -134,6 +134,7 @@
     </div>
 </section>
 
+
 <!-- Cart Modal -->
 <div id="cart-modal">
     <span id="close-cart">×</span>
@@ -152,6 +153,8 @@
     var closeBtn = document.getElementById('close-cart');
     var checkoutBtn = document.getElementById('checkout-btn');
     var cartContainer = document.getElementById('cart-container');
+    var csrftoken = '{{ csrf_token }}'; // دریافت CSRF Token از قالب جنگو
+    var successMessage = document.getElementById('success-message'); // پیام موفقیت
 
     function updateCart() {
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -181,7 +184,7 @@
 
     profileLogo.onclick = function () {
         cartModal.style.display = 'block';
-        updateCart(); // Update cart display when opening the modal
+        updateCart(); // بروزرسانی سبد خرید هنگام باز کردن مودال
     };
 
     closeBtn.onclick = function () {
@@ -194,7 +197,6 @@
         }
     };
 
-    
     document.querySelectorAll('.increase-quantity').forEach(button => {
         button.addEventListener('click', function (event) {
             event.stopPropagation();
@@ -260,7 +262,58 @@
             }
         });
     });
+
+    checkoutBtn.onclick = function () {
+    // بررسی وضعیت لاگین کاربر
+    fetch('/check_login_status/', {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.is_logged_in) {
+            // اگر کاربر لاگین بود، ثبت سفارش را انجام دهد
+            submitOrder();
+        } else {
+            // اگر کاربر لاگین نبود، به صفحه لاگین هدایت شود
+            window.location.href = '/login/?next=/submit_cart/';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
+function submitOrder() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    fetch('/submit_cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ cart: cartItems })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('سفارش شما با موفقیت ثبت شد!');
+            localStorage.removeItem('cartItems');
+            updateCart();
+        } else {
+            alert('خطا در ثبت سفارش');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('مشکلی در ارسال سفارش وجود دارد');
+    });
+};
 });
+
 
 </script>
 

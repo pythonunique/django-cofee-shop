@@ -31,9 +31,39 @@ class Food(Product):
         verbose_name_plural = "غذاها"
 
 class Hookah(Product):
-    class Meta:
+    class Meta:  
         verbose_name = "قلیون"
         verbose_name_plural = "قلیون‌ها"
+
+
+# class Order_food(models.Model):
+#     STATUS_CHOICES = [
+#         ('pending', 'در انتظار'),
+#         ('processing', 'در حال پردازش'),
+#         ('shipped', 'ارسال شده'),
+#         ('delivered', 'تحویل داده شده'),
+#         ('canceled', 'لغو شده'),
+#     ]
+
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     cart_items = models.JSONField()
+#     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+#     def __str__(self):
+#         return f"Order {self.id} - {self.user.username}"
+
+# class OrderItem_food(models.Model):
+#     order = models.ForeignKey(Order_food, on_delete=models.CASCADE, related_name='items')
+#     product_name = models.CharField(max_length=255)
+#     product_price = models.DecimalField(max_digits=10, decimal_places=2)
+#     quantity = models.IntegerField()
+
+#     def __str__(self):
+#         return f"{self.quantity} x {self.product_name} in order {self.order.id}"
+    
+    
 
 # class Cart(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)

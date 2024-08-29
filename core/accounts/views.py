@@ -148,3 +148,26 @@ def profile_view(request):
         'profile_form': profile_form,
         'password_form': password_form
     })
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+@csrf_exempt
+def submit_cart(request):
+    if request.method == 'POST':
+        cart = json.loads(request.body).get('cartItems', [])
+        # پردازش محصولات در سبد خرید
+        # مثلاً ذخیره در دیتابیس یا ایجاد سفارش
+
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'failed'}, status=400)
+
+
+def check_login_status(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'is_logged_in': True})
+    else:
+        return JsonResponse({'is_logged_in': False})
